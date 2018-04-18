@@ -37,15 +37,15 @@ public class ChannelController {
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@RequestMapping(value = "/channels", method = RequestMethod.POST)
-	public ChannelResponse createChannel(@Valid @RequestBody ChannelRequest channelRequest,
+	public ChannelResponse createChannel(@RequestBody @Valid ChannelRequest channelRequest,
 										 HttpServletResponse response) {
 		Channel channel = channelService.createChannel(channelRequest);
 		response.addHeader(HttpHeaders.LOCATION, channelBaseApi + "/channels/" + channel.getId().toString());
 		return new ChannelResponse(channel);
 	}
 
-	@RequestMapping(value = "/channels/{channelID}", method = RequestMethod.GET)
-	public ChannelResponse getChannelById(@PathVariable("channelID") final Integer channelId) {
+	@RequestMapping(value = "/channels/{channelId}", method = RequestMethod.GET)
+	public ChannelResponse getChannelById(@PathVariable("channelId") final Integer channelId) {
 		return new ChannelResponse(channelService.getChannelById(channelId));
 	}
 	

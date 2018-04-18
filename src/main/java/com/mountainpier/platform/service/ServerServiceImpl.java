@@ -42,7 +42,7 @@ public class ServerServiceImpl implements ServerService {
 	@Transactional(readOnly = true)
 	public Server getServerById(Integer serverId) {
 		return serverRepository.findById(serverId)
-			.orElseThrow(() -> new EntityNotFoundException("Developer '{" + serverId + "}' not found"));
+			.orElseThrow(() -> new EntityNotFoundException("Server '{" + serverId + "}' not found"));
 	}
 	
 	@Override

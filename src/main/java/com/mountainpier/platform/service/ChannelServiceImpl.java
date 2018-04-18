@@ -50,7 +50,7 @@ public class ChannelServiceImpl implements ChannelService {
 	@Transactional(readOnly = true)
 	public Channel getChannelById(Integer channelId) {
 		return channelRepository.findById(channelId)
-			.orElseThrow(() -> new EntityNotFoundException("Developer '{" + channelId + "}' not found"));
+			.orElseThrow(() -> new EntityNotFoundException("Channel '{" + channelId + "}' not found"));
 	}
 	
 //	@Override

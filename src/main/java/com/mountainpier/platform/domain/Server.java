@@ -3,6 +3,8 @@ package com.mountainpier.platform.domain;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -25,5 +27,8 @@ public class Server {
 	@OneToOne
 	@JoinColumn(name = "servers_channel_id")
 	private Channel channel;
+	
+	@OneToMany(mappedBy = "server", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Match> matches = new ArrayList<>();
 	
 }
