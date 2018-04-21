@@ -1,5 +1,6 @@
 package com.mountainpier.platform.service;
 
+import com.mountainpier.platform.domain.Channel;
 import com.mountainpier.platform.domain.Server;
 import com.mountainpier.platform.repository.ServerRepository;
 import com.mountainpier.platform.web.model.ServerRequest;
@@ -25,13 +26,13 @@ public class ServerServiceImpl implements ServerService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Page<Server> getServers(Integer page, Integer size) {
+	public Page<Server> getServers(final Integer page, Integer size) {
 		return serverRepository.findAll(PageRequest.of(page, size));
 	}
 	
 	@Override
 	@Transactional
-	public Server createServer(ServerRequest serverRequest) {
+	public Server createServer(final ServerRequest serverRequest) {
 		Server server = new Server()
 			.setName(serverRequest.getName())
 			.setGameId(UUID.fromString(serverRequest.getGameId()));
@@ -40,14 +41,14 @@ public class ServerServiceImpl implements ServerService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Server getServerById(Integer serverId) {
+	public Server getServerById(final Integer serverId) {
 		return serverRepository.findById(serverId)
 			.orElseThrow(() -> new EntityNotFoundException("Server '{" + serverId + "}' not found"));
 	}
 	
 	@Override
 	@Transactional
-	public Server updateServerById(Integer serverId, ServerRequest serverRequest) {
+	public Server updateServerById(final Integer serverId, ServerRequest serverRequest) {
 		Server server = this.getServerById(serverId);
 		server.setGameId(serverRequest.getGameId() != null ? UUID.fromString(serverRequest.getGameId()) : server.getGameId());
 		server.setName(serverRequest.getName() != null ? serverRequest.getName() : server.getName());
@@ -56,8 +57,13 @@ public class ServerServiceImpl implements ServerService {
 	
 	@Override
 	@Transactional
-	public void deleteServerById(Integer serverId) {
+	public void deleteServerById(final Integer serverId) {
 		serverRepository.deleteById(serverId);
+	}
+	
+	@Override
+	public Channel getChannelOfServerById(final Integer serverId) {
+		return this.getServerById(serverId).getChannel();
 	}
 	
 }

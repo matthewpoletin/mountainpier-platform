@@ -2,6 +2,7 @@ package com.mountainpier.platform.web;
 
 import com.mountainpier.platform.domain.Server;
 import com.mountainpier.platform.service.ServerServiceImpl;
+import com.mountainpier.platform.web.model.ChannelResponse;
 import com.mountainpier.platform.web.model.ServerRequest;
 import com.mountainpier.platform.web.model.ServerResponse;
 
@@ -49,16 +50,19 @@ public class ServerController {
 	}
 
 	@RequestMapping(value = "/servers/{serverId}", method = RequestMethod.PATCH)
-	public ServerResponse updateServerById(@PathVariable("serverId") Integer serverId,
+	public ServerResponse updateServerById(@PathVariable("serverId") final Integer serverId,
 										   @RequestBody @Valid ServerRequest serverRequest) {
 	 return new ServerResponse(serverService.updateServerById(serverId, serverRequest));
 	}
 
 	@RequestMapping(value = "/servers/{serverId}", method = RequestMethod.DELETE)
-	public void deleteServerById(@PathVariable("serverId") Integer serverId) {
+	public void deleteServerById(@PathVariable("serverId") final Integer serverId) {
 		serverService.deleteServerById(serverId);
 	}
 
-
+	@RequestMapping(value = "/servers/{serverId}/channel", method = RequestMethod.GET)
+	public ChannelResponse getChannelOfServerById(@PathVariable("serverId") final Integer serverId) {
+		return new ChannelResponse(serverService.getChannelOfServerById(serverId));
+	}
 
 }

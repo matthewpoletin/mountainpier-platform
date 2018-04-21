@@ -16,7 +16,10 @@ public class Channel {
 	@Column(name = "channels_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
+	
+	@Column(name = "channels_username", unique = true)
+	private String username;
+	
 	@Column(name = "channels_email", unique = true)
 	private String email;
 

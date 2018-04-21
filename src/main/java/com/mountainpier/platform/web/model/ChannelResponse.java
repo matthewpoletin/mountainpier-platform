@@ -13,13 +13,14 @@ public class ChannelResponse {
 	private Integer id;
 	private String username;
 	private String password;
-	private String oauthToken;
 	private String email;
+	private String oauthToken;
 	private Date dateAdded;
 	private String creator;
 
 	public ChannelResponse(Channel channel) {
 		this.id = channel.getId();
+		this.username = channel.getUsername();
 		this.email = channel.getEmail();
 		this.password = channel.getPassword();
 		this.oauthToken = channel.getOauthToken();

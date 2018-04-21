@@ -8,6 +8,8 @@ import java.util.Date;
 @Accessors(chain = true)
 public class ChannelRequest {
 	
+	private String username;
+	
 	private String email;
 	
 	private String password;

@@ -28,16 +28,11 @@ public class ChannelServiceImpl implements ChannelService {
 		return channelRepository.findAll(PageRequest.of(page, size));
 	}
 	
-//	@Override
-//	@Transactional(readOnly = true)
-//	public Page<Channel> getUsersWithUsername(String username, Integer page, Integer size) {
-//		return channelRepository.getUsersByUsernameContainingIgnoreCase(username, PageRequest.of(page, size));
-//	}
-	
 	@Override
 	@Transactional
 	public Channel createChannel(ChannelRequest channelRequest) {
 		Channel channel = new Channel()
+			.setUsername(channelRequest.getUsername())
 			.setEmail(channelRequest.getEmail())
 			.setPassword(channelRequest.getPassword())
 			.setOauthToken(channelRequest.getOauthToken())
@@ -53,22 +48,23 @@ public class ChannelServiceImpl implements ChannelService {
 			.orElseThrow(() -> new EntityNotFoundException("Channel '{" + channelId + "}' not found"));
 	}
 	
-//	@Override
-//	@Transactional(readOnly = true)
-//	public Channel getUserByUsername(String username) {
-//		return channelRepository.getUserByUsernameIgnoreCase(username);
-//	}
-//
-//	@Override
-//	@Transactional(readOnly = true)
-//	public Channel getUserByRegEmail(String regEmail) {
-//		return channelRepository.getUserByRegEmailIgnoreCase(regEmail);
-//	}
+	@Override
+	@Transactional(readOnly = true)
+	public Channel getChannelByUsername(String username) {
+		return channelRepository.getChannelByUsernameIgnoreCase(username);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Channel getChannelByRegEmail(String regEmail) {
+		return channelRepository.getChannelByEmailIgnoreCase(regEmail);
+	}
 	
 	@Override
 	@Transactional
 	public Channel updateChannelById(Integer channelId, ChannelRequest channelRequest) {
 		Channel channel = this.getChannelById(channelId);
+		channel.setUsername(channelRequest.getUsername() != null ? channelRequest.getUsername() : channel.getUsername());
 		channel.setEmail(channelRequest.getEmail() != null ? channelRequest.getEmail() : channel.getEmail());
 		channel.setPassword(channelRequest.getPassword() != null ? channelRequest.getPassword() : channel.getPassword());
 		channel.setOauthToken(channelRequest.getOauthToken() != null ? channelRequest.getOauthToken() : channel.getOauthToken());

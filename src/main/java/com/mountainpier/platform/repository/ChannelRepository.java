@@ -6,4 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ChannelRepository
 		extends JpaRepository<Channel, Integer> {
+	
+	Channel getChannelByUsernameIgnoreCase(String username);
+	
+	Channel getChannelByEmailIgnoreCase(String email);
 }

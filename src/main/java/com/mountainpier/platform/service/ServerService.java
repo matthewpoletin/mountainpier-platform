@@ -1,5 +1,6 @@
 package com.mountainpier.platform.service;
 
+import com.mountainpier.platform.domain.Channel;
 import com.mountainpier.platform.domain.Server;
 import com.mountainpier.platform.web.model.ServerRequest;
 
@@ -11,4 +12,6 @@ public interface ServerService {
 	Server getServerById(Integer serverId);
 	Server updateServerById(Integer serverId, ServerRequest serverRequest);
 	void deleteServerById(Integer serverId);
+	
+	Channel getChannelOfServerById(Integer serverId);
 }

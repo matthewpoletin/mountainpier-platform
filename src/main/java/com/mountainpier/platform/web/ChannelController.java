@@ -49,26 +49,27 @@ public class ChannelController {
 		return new ChannelResponse(channelService.getChannelById(channelId));
 	}
 	
-//	@RequestMapping(value = "/channels/by", method = RequestMethod.GET)
-//	public ChannelResponse getUserBy(@RequestParam(name = "email", required = false) final String email,
-//									 HttpServletResponse response) {
-//		Channel channel;
-//		if (username != null && username.length() > 0) {
-//			channel = channelService.getUserByUsername(username);
-//		} else if (email != null && email.length() > 0) {
-//			channel = channelService.getUserByRegEmail(email);
-//		} else {
-//			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//			return null;
-//		}
-//
-//		if (channel != null) {
-//			return new ChannelResponse(channel);
-//		} else {
-//			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-//			return null;
-//		}
-//	}
+	@RequestMapping(value = "/channels/by", method = RequestMethod.GET)
+	public ChannelResponse getUserBy(@RequestParam(name = "username", required = false) final String username,
+									 @RequestParam(name = "email", required = false) final String email,
+									 HttpServletResponse response) {
+		Channel channel;
+		if (username != null && username.length() > 0) {
+			channel = channelService.getChannelByUsername(username);
+		} else if (email != null && email.length() > 0) {
+			channel = channelService.getChannelByRegEmail(email);
+		} else {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
+
+		if (channel != null) {
+			return new ChannelResponse(channel);
+		} else {
+			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+			return null;
+		}
+	}
 	
 	@RequestMapping(value = "/channels/{channelId}", method = RequestMethod.PATCH)
 	public ChannelResponse updateChannelById(@PathVariable("channelId") final Integer channelId,
