@@ -16,11 +16,11 @@ public class Match {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "matches_user_id")
+	@Column(name = "matches_user_id", unique = true)
 	private UUID userId;
 	
 	@ManyToOne
-	@JoinColumn(name = "matches_server_id")
+	@JoinColumn(name = "matches_server_id", nullable = false)
 	private Server server;
 
 }

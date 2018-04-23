@@ -1,10 +1,15 @@
 package com.mountainpier.platform.service;
 
 import com.mountainpier.platform.domain.Channel;
+import com.mountainpier.platform.domain.Match;
 import com.mountainpier.platform.domain.Server;
+import com.mountainpier.platform.web.model.MatchRequest;
 import com.mountainpier.platform.web.model.ServerRequest;
 
 import org.springframework.data.domain.Page;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 public interface ServerService {
 	Page<Server> getServers(Integer page, Integer size);
@@ -14,4 +19,10 @@ public interface ServerService {
 	void deleteServerById(Integer serverId);
 	
 	Channel getChannelOfServerById(Integer serverId);
+	
+	Page<UUID> getUsersOfServerById(final Integer serverId, Integer page, Integer size);
+	Match addUserToServerById(Integer serverId, MatchRequest matchRequest);
+	
+	@Transactional
+	void removeUserFromServerById(Integer serverId, UUID userId);
 }

@@ -1,17 +1,21 @@
 package com.mountainpier.platform.service;
 
 import com.mountainpier.platform.domain.Channel;
+import com.mountainpier.platform.domain.Match;
 import com.mountainpier.platform.domain.Server;
 import com.mountainpier.platform.repository.ServerRepository;
+import com.mountainpier.platform.web.model.MatchRequest;
 import com.mountainpier.platform.web.model.ServerRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -19,9 +23,13 @@ public class ServerServiceImpl implements ServerService {
 	
 	private final ServerRepository serverRepository;
 	
+	private final MatchServiceImpl matchService;
+	
 	@Autowired
-	public ServerServiceImpl(ServerRepository serverRepository) {
+	public ServerServiceImpl(ServerRepository serverRepository,
+							 MatchServiceImpl matchService) {
 		this.serverRepository = serverRepository;
+		this.matchService = matchService;
 	}
 	
 	@Override
@@ -62,8 +70,33 @@ public class ServerServiceImpl implements ServerService {
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
 	public Channel getChannelOfServerById(final Integer serverId) {
 		return this.getServerById(serverId).getChannel();
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Page<UUID> getUsersOfServerById(final Integer serverId,
+										   final Integer page,
+										   final Integer size) {
+		Server server = this.getServerById(serverId);
+		List<Match> matches = server.getMatches();
+		List<UUID> usersList = new ArrayList<>();
+		matches.forEach(match -> usersList.add(match.getUserId()));
+		return new PageImpl<>(usersList, PageRequest.of(page, size), size);
+	}
+	
+	@Override
+	@Transactional
+	public Match addUserToServerById(final Integer serverId, MatchRequest matchRequest) {
+		return matchService.createMatch(serverId, matchRequest);
+	}
+	
+	@Override
+	@Transactional
+	public void removeUserFromServerById(final Integer serverId, final UUID userId) {
+		matchService.deleteMatchBeServerIdAndUserId(serverId, userId);
 	}
 	
 }

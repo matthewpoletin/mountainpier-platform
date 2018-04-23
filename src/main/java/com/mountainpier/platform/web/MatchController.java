@@ -38,7 +38,7 @@ public class MatchController {
 	@RequestMapping(value = "/matches", method = RequestMethod.POST)
 	MatchResponse createMatch(@RequestBody @Valid MatchRequest matchRequest,
 							  HttpServletResponse response) {
-		Match match = matchService.createMatch(matchRequest);
+		Match match = matchService.createMatch(matchRequest.getServerId(), matchRequest);
 		response.setHeader(HttpHeaders.LOCATION, matchBaseApi + "/matches/" + match.getId());
 		return new MatchResponse(match);
 	}
