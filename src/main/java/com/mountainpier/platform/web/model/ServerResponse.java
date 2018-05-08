@@ -12,13 +12,13 @@ public class ServerResponse {
 	private Integer id;
 	private String gameId;
 	private String name;
-	private Integer channelId;
+	private ChannelResponse channel;
 	
 	public ServerResponse(Server server) {
 		this.id = server.getId();
 		this.gameId = server.getId().toString();
 		this.name = server.getName();
-		if (server.getChannel() != null) this.channelId = server.getChannel().getId();
+		this.channel = new ChannelResponse(server.getChannel());
 	}
 	
 }
