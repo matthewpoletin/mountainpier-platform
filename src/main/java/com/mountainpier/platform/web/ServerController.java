@@ -54,6 +54,7 @@ public class ServerController {
 	 return new ServerResponse(serverService.updateServerById(serverId, serverRequest));
 	}
 
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@RequestMapping(value = "/servers/{serverId}", method = RequestMethod.DELETE)
 	public void deleteServerById(@PathVariable("serverId") final Integer serverId) {
 		serverService.deleteServerById(serverId);

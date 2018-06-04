@@ -16,7 +16,7 @@ public class ChannelRequest {
 	
 	private Date dateAdded;
 	
-	private String creator;
+	private String creatorId;
 	
 	private String oauthToken;
 	

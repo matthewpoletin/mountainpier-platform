@@ -36,7 +36,7 @@ public class ChannelServiceImpl implements ChannelService {
 			.setEmail(channelRequest.getEmail())
 			.setPassword(channelRequest.getPassword())
 			.setOauthToken(channelRequest.getOauthToken())
-			.setCreatorId(UUID.fromString(channelRequest.getCreator()))
+			.setCreatorId(UUID.fromString(channelRequest.getCreatorId()))
 			.setDateAdded(channelRequest.getDateAdded());
 		return channelRepository.save(channel);
 	}
@@ -68,7 +68,7 @@ public class ChannelServiceImpl implements ChannelService {
 		channel.setEmail(channelRequest.getEmail() != null ? channelRequest.getEmail() : channel.getEmail());
 		channel.setPassword(channelRequest.getPassword() != null ? channelRequest.getPassword() : channel.getPassword());
 		channel.setOauthToken(channelRequest.getOauthToken() != null ? channelRequest.getOauthToken() : channel.getOauthToken());
-		channel.setCreatorId(channelRequest.getCreator() != null ? UUID.fromString(channelRequest.getCreator()) : channel.getCreatorId());
+		channel.setCreatorId(channelRequest.getCreatorId() != null ? UUID.fromString(channelRequest.getCreatorId()) : channel.getCreatorId());
 		channel.setDateAdded(channelRequest.getDateAdded() != null ? channelRequest.getDateAdded() : channel.getDateAdded());
 		return channelRepository.save(channel);
 	}

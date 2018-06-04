@@ -22,13 +22,15 @@ import java.util.UUID;
 public class ServerServiceImpl implements ServerService {
 	
 	private final ServerRepository serverRepository;
-	
-	private final MatchServiceImpl matchService;
+	private final ChannelService channelService;
+	private final MatchService matchService;
 	
 	@Autowired
 	public ServerServiceImpl(ServerRepository serverRepository,
-							 MatchServiceImpl matchService) {
+							 ChannelService channelService,
+							 MatchService matchService) {
 		this.serverRepository = serverRepository;
+		this.channelService = channelService;
 		this.matchService = matchService;
 	}
 	
@@ -41,8 +43,10 @@ public class ServerServiceImpl implements ServerService {
 	@Override
 	@Transactional
 	public Server createServer(final ServerRequest serverRequest) {
+		Channel channel = this.channelService.getChannelById(serverRequest.getChannelId());
 		Server server = new Server()
 			.setName(serverRequest.getName())
+			.setChannel(channel)
 			.setGameId(UUID.fromString(serverRequest.getGameId()));
 		return serverRepository.save(server);
 	}
@@ -60,6 +64,10 @@ public class ServerServiceImpl implements ServerService {
 		Server server = this.getServerById(serverId);
 		server.setGameId(serverRequest.getGameId() != null ? UUID.fromString(serverRequest.getGameId()) : server.getGameId());
 		server.setName(serverRequest.getName() != null ? serverRequest.getName() : server.getName());
+		if (serverRequest.getChannelId() != null) {
+			Channel channel = this.channelService.getChannelById(serverRequest.getChannelId());
+			server.setChannel(channel);
+		}
 		return serverRepository.save(server);
 	}
 	

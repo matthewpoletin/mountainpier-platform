@@ -16,7 +16,7 @@ public class ChannelResponse {
 	private String email;
 	private String oauthToken;
 	private Date dateAdded;
-	private String creator;
+	private String creatorId;
 
 	public ChannelResponse(Channel channel) {
 		this.id = channel.getId();
@@ -25,6 +25,6 @@ public class ChannelResponse {
 		this.password = channel.getPassword();
 		this.oauthToken = channel.getOauthToken();
 		this.dateAdded = channel.getDateAdded();
-		this.creator = channel.getCreatorId().toString();
+		this.creatorId = channel.getCreatorId().toString();
 	}
 }
