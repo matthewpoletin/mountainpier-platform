@@ -27,10 +27,8 @@ public class ServerController {
 	}
 
 	@RequestMapping(value = "/servers", method = RequestMethod.GET)
-	public Page<ServerResponse> getServers(@RequestParam(value = "page", required = false) Integer page,
-										   @RequestParam(value = "size", required = false) Integer size) {
-		page = page != null ? page : 0;
-		size = size != null ? size : 25;
+	public Page<ServerResponse> getServers(@RequestParam(value = "page", defaultValue = "0") final Integer page,
+										   @RequestParam(value = "size", defaultValue = "25") final Integer size) {
 		return serverService.getServers(page, size)
 			.map(ServerResponse::new);
 	}

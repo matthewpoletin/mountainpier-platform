@@ -16,7 +16,7 @@ public class ServerResponse {
 	
 	public ServerResponse(Server server) {
 		this.id = server.getId();
-		this.gameId = server.getId().toString();
+		this.gameId = server.getGameId().toString();
 		this.name = server.getName();
 		this.channel = new ChannelResponse(server.getChannel());
 	}

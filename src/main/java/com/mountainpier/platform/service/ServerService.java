@@ -7,8 +7,6 @@ import com.mountainpier.platform.web.model.MatchRequest;
 import com.mountainpier.platform.web.model.ServerRequest;
 
 import org.springframework.data.domain.Page;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.UUID;
 
 public interface ServerService {
@@ -23,6 +21,7 @@ public interface ServerService {
 	Page<UUID> getUsersOfServerById(final Integer serverId, Integer page, Integer size);
 	Match addUserToServerById(Integer serverId, MatchRequest matchRequest);
 	
-	@Transactional
 	void removeUserFromServerById(Integer serverId, UUID userId);
+	
+	Page<Server> getServersOfGame(UUID gameId, Integer page, Integer size);
 }

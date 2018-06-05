@@ -27,10 +27,8 @@ public class ChannelController {
 	}
 	
 	@RequestMapping(value = "/channels", method = RequestMethod.GET)
-	public Page<ChannelResponse> getChannels(@RequestParam(value = "page", required = false) Integer page,
-											 @RequestParam(value = "size", required = false) Integer size) {
-		page = page != null ? page : 0;
-		size = size != null ? size : 25;
+	public Page<ChannelResponse> getChannels(@RequestParam(value = "page", defaultValue = "0") final Integer page,
+											 @RequestParam(value = "size", defaultValue = "25") final Integer size) {
 		return channelService.getChannels(page, size)
 			.map(ChannelResponse::new);
 	}

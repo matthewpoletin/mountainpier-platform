@@ -36,7 +36,7 @@ public class ServerServiceImpl implements ServerService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Page<Server> getServers(final Integer page, Integer size) {
+	public Page<Server> getServers(final Integer page, final Integer size) {
 		return serverRepository.findAll(PageRequest.of(page, size));
 	}
 	
@@ -105,6 +105,14 @@ public class ServerServiceImpl implements ServerService {
 	@Transactional
 	public void removeUserFromServerById(final Integer serverId, final UUID userId) {
 		matchService.deleteMatchBeServerIdAndUserId(serverId, userId);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Page<Server> getServersOfGame(final UUID gameId,
+										 final Integer page,
+										 final Integer size) {
+		return this.serverRepository.getServersByGameId(gameId, PageRequest.of(page, size));
 	}
 	
 }
